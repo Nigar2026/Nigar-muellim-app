@@ -59,7 +59,6 @@
         
         .hero-actions { display: flex; gap: 10px; justify-content: center; margin-bottom: 20px; }
         
-        /* Teacher Profile Styles */
         .teacher-section {
             margin-top: 30px; padding: 30px; background: white; border-radius: 20px; 
             border: 1px solid #f0e9e1; text-align: left;
@@ -81,7 +80,6 @@
         .lesson-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; color: var(--text-muted); }
         .lesson-tag { background: var(--accent-bg); color: var(--primary-dark); padding: 3px 8px; border-radius: 6px; font-weight: 600; }
 
-        /* Video Modal Pəncərəsi */
         .modal {
             display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%;
             background-color: rgba(0,0,0,0.6); align-items: center; justify-content: center; padding: 15px;
@@ -100,7 +98,6 @@
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;
         }
 
-        /* Quiz UI */
         .quiz-card { background: var(--card-bg); border-radius: var(--radius-md); padding: 20px; border: 1px solid #f0e9e1; margin-bottom: 15px; }
         .quiz-option { background: #fdfbf7; border: 1px solid #eae2d8; padding: 12px; border-radius: var(--radius-sm); margin-top: 8px; cursor: pointer; font-size: 0.85rem; display: flex; align-items: center; gap: 10px; }
         .quiz-option input { accent-color: var(--primary); }
@@ -132,7 +129,6 @@
 </head>
 <body>
 
-    <!-- Giriş Tələb Olunan Ekran (Kod daxil edilməyibsə görünür) -->
     <div id="lockScreen" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #f8f6f2; z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 20px;">
         <div style="background: white; padding: 30px; border-radius: 16px; width: 100%; max-width: 400px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border: 1px solid #f0e9e1;">
             <i class="fa-solid fa-lock" style="font-size: 2.5rem; color: var(--primary); margin-bottom: 15px;"></i>
@@ -162,7 +158,6 @@
             </div>
         </header>
 
-        <!-- Home Page -->
         <div id="home-page" class="page-section active">
             <section class="hero">
                 <div>
@@ -175,7 +170,6 @@
                 </div>
             </section>
 
-            <!-- Haqqımda Bölməsi (Şəkilsiz) -->
             <section class="teacher-section">
                 <div class="teacher-info">
                     <h2>Haqqımda</h2>
@@ -188,7 +182,6 @@
             </section>
         </div>
 
-        <!-- Lessons Page -->
         <div id="lessons-page" class="page-section">
             <div class="section-header-custom">
                 <h2>Azərbaycan Dili Dərsləri</h2>
@@ -207,7 +200,6 @@
             <div class="lessons-grid" id="lessons-list"></div>
         </div>
 
-        <!-- Video Modal Pəncərəsi -->
         <div id="videoModal" class="modal">
             <div class="modal-content">
                 <span class="close-modal" onclick="closeVideoModal()">&times;</span>
@@ -216,7 +208,6 @@
             </div>
         </div>
 
-        <!-- Diagnostic Quiz View -->
         <div id="quiz-page" class="page-section">
             <div class="section-header-custom">
                 <h2>Diaqnostik Qiymətləndirmə</h2>
@@ -237,7 +228,6 @@
             </div>
         </div>
 
-        <!-- Trust Bar -->
         <footer class="trust-bar">
             <div class="trust-item">
                 <i class="fa-solid fa-user-tie"></i>
@@ -257,7 +247,6 @@
     </div>
 
     <script>
-        // Səhifə açıldıqda kod yoxlanılır
         window.onload = function() {
             if(localStorage.getItem("nigar_teacher_auth") === "true") {
                 document.getElementById('lockScreen').style.display = 'none';
@@ -267,7 +256,6 @@
 
         function checkCode() {
             const code = document.getElementById('accessCode').value;
-            // Buradakı şifrəni dəyişə bilərsiniz
             if(code === "NIGAR2024") {
                 localStorage.setItem("nigar_teacher_auth", "true");
                 document.getElementById('lockScreen').style.display = 'none';
@@ -288,7 +276,6 @@
             { title: "Təyin və Tamamlıq", class: "6", topic: "Sintaksis", desc: "Cümlənin ikinci dərəcəli üzvlərinin izahı.", videoUrl: "" },
             { title: "Həmcins üzvlər", class: "7", topic: "Sintaksis", desc: "Həmcins üzvlərdə durğu işarələri və bağlayıcılar.", videoUrl: "" },
             { title: "Mürəkkəb cümlə tipləri", class: "8", topic: "Sintaksis", desc: "Tabesiz və tabeli mürəkkəb cümlələr.", videoUrl: "" },
-            // Google Drive doğru pleyer (preview) linki
             { title: "Vasitəsiz nitq", class: "9", topic: "Sintaksis", desc: "Müəllifin sözü və vasitəsiz nitqdə durğu işarələri.", videoUrl: "https://drive.google.com/file/d/1ZGKs3WhdDc6h0IaixpLvhNiybBayiQCI/preview" }
         ];
 
@@ -321,7 +308,7 @@
             },
             {
                 q: "3. Sözlərdən birinin tələffüzü səhv verilib:",
-                options: ["daranmaq – [davrammax]", "meymunlar – [meymunnar]", "danışıqlar – [danşıqlar]", "ümidsizlik – [ümitsizdik’]", "möhkəmlik – [möhkəmlik’]"],
+                options: ["davranmaq – [davrammax]", "meymunlar – [meymunnar]", "danışıqlar – [danşıqlar]", "ümidsizlik – [ümitsizdik’]", "möhkəmlik – [möhkəmlik’]"],
                 correct: 2
             },
             {
