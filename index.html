@@ -109,6 +109,10 @@
             margin-top: 8px; cursor: pointer; font-size: 0.85rem; display: flex; align-items: center; gap: 10px;
         }
         .quiz-option input { accent-color: var(--primary); }
+        .reading-text {
+            background: #fdfbf7; border: 1px solid #eae2d8; padding: 15px; border-radius: var(--radius-sm);
+            margin-bottom: 15px; font-size: 0.9rem; line-height: 1.5; color: var(--text-dark);
+        }
 
         .result-box {
             background: var(--accent-bg); border-radius: var(--radius-md); padding: 25px;
@@ -156,7 +160,7 @@
             <nav>
                 <a id="nav-home" class="active" onclick="showPage('home')">Ana səhifə</a>
                 <a id="nav-lessons" onclick="showPage('lessons')">Dərslər</a>
-                <a id="nav-quiz" onclick="showPage('quiz')">Diaqnostik Test (16 Sual)</a>
+                <a id="nav-quiz" onclick="showPage('quiz')">Diaqnostik Test</a>
             </nav>
             <div class="auth-btns">
                 <button class="btn btn-outline"><i class="fa-regular fa-user"></i> Giriş</button>
@@ -170,9 +174,9 @@
                 <div>
                     <div class="badge"><i class="fa-solid fa-seedling"></i> Xoş gəlmisiniz!</div>
                     <h1>Azərbaycan dilini öyrənmək daha asan!</h1>
-                    <p>Video dərslər, izahlar, testlər və 16 suallıq diaqnostik imtahanlar – hamısı bir platformada.</p>
+                    <p>Video dərslər, izahlar, testlər və diaqnostik imtahanlar – hamısı bir platformada.</p>
                     <div class="hero-actions">
-                        <button class="btn btn-primary" onclick="showPage('quiz')"><i class="fa-solid fa-clipboard-check"></i> Diaqnostik Testə Başla (16 Sual)</button>
+                        <button class="btn btn-primary" onclick="showPage('quiz')"><i class="fa-solid fa-clipboard-check"></i> Diaqnostik Testə Başla</button>
                     </div>
                 </div>
                 <div class="hero-image">
@@ -194,7 +198,7 @@
                 <div class="nav-card" onclick="showPage('quiz')">
                     <div class="icon-box"><i class="fa-solid fa-square-check"></i></div>
                     <h3>Diaqnostik Test</h3>
-                    <p>16 suallıq imtahanla səviyyənizi müəyyən edin</p>
+                    <p>Səviyyənizi müəyyən etmək üçün imtahan verin</p>
                     <span class="card-link">Testə başla <i class="fa-solid fa-arrow-right"></i></span>
                 </div>
             </section>
@@ -219,7 +223,7 @@
             <div class="lessons-grid" id="lessons-list"></div>
         </div>
 
-        <!-- Diagnostic Quiz View (16 Questions) -->
+        <!-- Diagnostic Quiz View -->
         <div id="quiz-page" class="page-section">
             <div class="section-header-custom">
                 <h2>Diaqnostik Qiymətləndirmə</h2>
@@ -247,7 +251,7 @@
                 <i class="fa-solid fa-user-tie"></i>
                 <div>
                     <h5>Təcrübəli müəllim</h5>
-                    <p>5+ illik təcrübə</p>
+                    <p>10+ illik təcrübə</p>
                 </div>
             </div>
             <div class="trust-item">
@@ -270,24 +274,149 @@
             { title: "Vasitəsiz nitq", class: "9", topic: "Sintaksis", desc: "Müəllifin sözü və vasitəsiz nitqdə durğu işarələri." }
         ];
 
-        // 16 Suallıq Diaqnostik Qiymətləndirmə Siyahısı
         const quizQuestions = [
-            { q: "1. 'Ahəng qanunu' nəyə deyilir?", options: ["Sözdə saitlərin bir-birini izləməsinə", "Samitlərin kar və cingiltili olmasına", "Sözlərin hecalara bölünməsinə", "Vurğunun təyin olunmasına"], correct: 0 },
-            { q: "2. Hansı sözdə düzəltmə isim var?", options: ["Kitab", "Dənizçi", "Uşaqlar", "Məktəb"], correct: 1 },
-            { q: "3. Cümlənin baş üzvləri hansılardır?", options: ["Mübtəda və Xəbər", "Təyin və Tamamlıq", "Zərflik və Xəbər", "Mübtəda və Təyin"], correct: 0 },
-            { q: "4. Aşağıdakılardan hansı tabesiz mürəkkəb cümlədir?", options: ["Külək əsdi və yarpaqlar töküldü.", "Bilsəydim, gələrdim.", "Mən bildim ki, o gələcək.", "Çünki vaxtım yox idi."], correct: 0 },
-            { q: "5. Hansı sözün yazılışı düzgündür?", options: ["Müəllim", "Məllim", "Müəlim", "Müəlimm"], correct: 0 },
-            { q: "6. İsimlər hansı hallarda olur?", options: ["Adlıq, yiyəlik, yönlük, təsirlik, yerlik, çıxışlıq", "Yalnız adlıq və yiyəlik", "Sadə və düzəltmə", "Mübtəda və xəbər"], correct: 0 },
-            { q: "7. Sifət hansı suallara cavab verir?", options: ["Necə? nə çür? hansı?", "Kim? nə? hara?", "Nə edir? nə tövr?", "Nə qədər? neçə?"], correct: 0 },
-            { q: "8. Saylar məna görə neçə yerə bölünür?", options: ["6", "2", "4", "3"], correct: 0 },
-            { q: "9. Felin neçə zamanı var?", options: ["3 (Keçindən, indiki, gələcək)", "2", "4", "5"], correct: 0 },
-            { q: "10. Zərf hərəkətin nəyini bildirir?", options: ["Tərzini, zamanını, yerini, miqdarını", "Adını", "Rəngini", "Sayını"], correct: 0 },
-            { q: "11. Əvəzlik nəyi əvəz edir?", options: ["Əsas nitq hissələrini (isim, sifət, say və s.)", "Yalnız felləri", "Yalnız vergülləri", "Durğu işarələrini"], correct: 0 },
-            { q: "12. Köməkçi nitq hissələrinə nə daxildir?", options: [" Qoşma, bağlayıcı, ədat, modal sözlər, nida", "İsim, sifət, fel", "Mübtəda, xəbər", "Sintaktik əlaqələr"], correct: 0 },
-            { q: "13. Qoşma özündən əvvəlki sözlə hansı halda işlənə bilər?", options: ["Adlıq, yiyəlik, yönlük, çıxışlıq", "Yalnız təsirlik", "Yalnız yerlik", "Heç vaxt işlənməz"], correct: 0 },
-            { q: "14. Bağlayıcılar nə üçündür?", options: ["Həmcins üzvləri və cümlələri əlaqələndirmək üçün", "Sözləri azaltmaq üçün", "Cümləni bitirmək üçün", "Sual vermək üçün"], correct: 0 },
-            { q: "15. Nida nəyi bildirir?", options: ["Hiss və həyəcanı", "Əmri", "Sualı", "Əlaməti"], correct: 0 },
-            { q: "16. Sintaksis nəyi öyrənir?", options: ["Cümlə və söz birləşmələrini", "Hərflərin səsini", "Sözlərin kökünü", "İmlanı"], correct: 0 }
+            {
+                q: "1. “Pərakəndə” sözünün leksik mənasını müəyyən edin:",
+                options: [
+                    "fikirli, dərdli, qəmli",
+                    "nizamlı, intizamlı olan",
+                    "birlikdə, parçalara ayrılmama",
+                    "eyni yerdə daimi olan",
+                    "dağınıq, nizamsız, qarma-qarışıq"
+                ],
+                correct: 4
+            },
+            {
+                q: "2. “Ağıl olmasa, gözəllik də heç nəyə yaramaz.” cümləsində sözlərdən hansı isimdir?",
+                options: [
+                    "ağıl olmasa",
+                    "gözəllik",
+                    "yaramaz",
+                    "heç nəyə",
+                    "də"
+                ],
+                correct: 1
+            },
+            {
+                q: "3. Sözlərdən birinin tələffüzü səhv verilib:",
+                options: [
+                    "daranmaq – [davrammax]",
+                    "meymunlar – [meymunnar]",
+                    "danışıqlar – [danşıqlar]",
+                    "ümidsizlik – [ümitsizdik’]",
+                    "möhkəmlik – [möhkəmlik’]"
+                ],
+                correct: 0
+            },
+            {
+                q: "4. Dil haqqında hansı fikir doğrudur?",
+                options: [
+                    "Dil yeganə ünsiyyət vasitəsidir.",
+                    "Dil yalnız cəmiyyətdə formalaşa bilər.",
+                    "Dil şüurla əlaqəli deyil.",
+                    "Dil irsi xüsusiyyətlərlə bağlıdır.",
+                    "Dil ünsiyyət prosesidir."
+                ],
+                correct: 1
+            },
+            {
+                q: "5. “Kəndə yol çəkildi, gediş-gəliş artdı.” Tabesiz mürəkkəb cümlənin məna əlaqəsini göstərin:",
+                options: [
+                    "qarşılaşdırma",
+                    "ardıcıllıq",
+                    "aydınlaşdırma",
+                    "zaman",
+                    "səbəb-nəticə"
+                ],
+                correct: 4
+            },
+            {
+                q: "6. Hərfərdən biri nöqtələrin yerinə yazıla bilər: lo…man, mə…lub, ma…ara, təbii…ət",
+                options: ["ğ", "x", "k", "q", "h"],
+                correct: 4
+            },
+            {
+                q: "7. Sözlərdən birinin yazılışı doğrudur:",
+                options: ["məhgəmə", "rəhmli", "məxbus", "məxnı", "taht"],
+                correct: 1
+            },
+            {
+                q: "8. “Oxuyasınız” sözü feilin hansı şəklindədir?",
+                options: ["əmr", "lazım", "vacib", "xəbər", "arzu"],
+                correct: 4
+            },
+            {
+                q: "9. İki leksik şəkilçisi olan feilləri göstərin:\n1. darandım\n2. yandırıldı\n3. yəhərləndi\n4. vidalaşdı\n5. böyütdü",
+                options: ["1,5", "2,3", "2,4", "3,4", "4,5"],
+                correct: 1
+            },
+            {
+                q: "10. İşarə əvəzliklərini göstərin:",
+                options: [
+                    "hərə, hamı, biri",
+                    "elə, belə, həmin",
+                    "biz, siz, onlar",
+                    "hər, bütün, filan",
+                    "hansı, harada"
+                ],
+                correct: 1
+            },
+            {
+                isReading: true,
+                text: "<strong>Mətn: “Qızılgül və kaktus”</strong><br><br>Biri var imiş, biri yox imiş. Uzaq bir səhrada gözəl görünüşü ilə qürur duyan bir gül var imiş.<br><br>Yeganə şikayəti isə tikanlı kaktusun yanında böyüməsi imiş. Hər gün qızılgül öz gözəl ləçəkləri ilə öyünüb, görünüşünə görə kaktusa lağ edib gülsə də, kaktus onun bu sözlərinə sakit qalırdı. Yaxınlıqdakı bütün bitkilər gülə bu hərəkətin düzgün olmadığını anlatmağa çalışsalar da, o kaktusa gülməyə davam edirdi.<br><br>Bir gün qızılgül: “Bir bu kaktusa baxın, hansı quş bunun üstünə qonsa tikanı batacaq və quşu yaralayacaq. Həm tikanlıdır, həm də zərərlidir.” – deyib yenə rişxənd etməyə başladı. Lakin kaktus yenə də cavab vermədi.<br><br>Bundan qısa müddət sonra qızmar bir yay gəldi, səhra həddindən artıq qurudu və bitkilər üçün su qalmadı. Qızılgül sürətlə solmağa başladı. Gözəl ləçəkləri qurumuş, təravətini itirmişdi. O, susuzluqdan öz ləçəklərini tökməyə başlamışdı.<br><br>Və birdən kaktusa dönərək bir sərçənin su içmək üçün dimdiklərini kaktusa batırdığını gördü. … Xeyirxah kaktus isə asanlıqla razılaşdı və dostluğunu əsirgəmədən hər ikisinə bu quraqlıqda kömək etdi.<br><br>Artıq qızılgül lağ etməyin pis bir xüsusiyyət olduğunu öyrəndi və bunu bir daha təkrar etmədi.",
+                q: "11. Mətndə tünd-qara hərflərlə verilmiş sözü hansı sözlə əvəz etmək olar? (“rişxənd etmək”)\n1. lağ etmək\n2. ələ salmaq\n3. rica etmək\n4. şikayət etmək",
+                options: ["3,4", "1,4", "2,3", "1,2", "2,4"],
+                correct: 3
+            },
+            {
+                q: "12. Mətnin nəticə hissəsinə aid olan fikri müəyyən edin:",
+                options: [
+                    "Kaktusun səbri",
+                    "Qızılgülün istehzası",
+                    "Bitkilərin dilə gəlməsi",
+                    "Qızılgülün peşmanlığı",
+                    "Qızılgülün şikayəti"
+                ],
+                correct: 3
+            },
+            {
+                q: "13. Uyğunluğu müəyyən edin:\n1. Qızılgül\n2. Kaktus\na. səxavətli\nb. özündənrazı\nc. dostcanlı\nd. lovğa",
+                options: [
+                    "1.b,d ; 2.a,c",
+                    "1.a,c ; 2.b,d",
+                    "1.c,b ; 2.a",
+                    "1.b ; 2.a",
+                    "1.a,b ; 2.c,d"
+                ],
+                correct: 0
+            },
+            {
+                q: "14. Nöqtələrin yerinə hansı cümlə yazılsa, tərkib hissələr arasındakı əlaqə pozular?",
+                options: [
+                    "Qızılgül öz etdiklərindən çox utansa da, kaktusdan su istədi.",
+                    "Qızılgül öz səhvini anladı və utanaraq kaktusdan su istədi.",
+                    "Qızılgül kaktusdan üzr istədi və ona kömək etməsini xahiş etdi.",
+                    "Qızılgül kaktusdan üzr istəmək əvəzinə su da tələb etdi.",
+                    "Qızılgül peşman oldu və kaktusdan kömək istədi."
+                ],
+                correct: 3
+            },
+            {
+                q: "15. Gülün “kaktus zərərlidir” fikri hansı abzasa əsasən yanlış olduğunu deyə bilərik?",
+                options: ["I", "III", "V", "IV", "II"],
+                correct: 2
+            },
+            {
+                q: "16. Qızılgül giley-güzar edirdi:",
+                options: [
+                    "səhrada bitməsindən",
+                    "susuzluqdan",
+                    "kaktusun tikanlı olmasından",
+                    "gözəl ləçəklərinin olmasından",
+                    "kaktusun yanında yetişməsindən"
+                ],
+                correct: 4
+            }
         ];
 
         function showPage(pageName) {
@@ -349,9 +478,12 @@
                     `;
                 });
 
+                let readingHTML = item.isReading ? `<div class="reading-text">${item.text}</div>` : '';
+
                 container.innerHTML += `
                     <div class="quiz-card">
-                        <h4 style="margin-bottom: 10px;">${item.q}</h4>
+                        ${readingHTML}
+                        <h4 style="margin-bottom: 10px; white-space: pre-line;">${item.q}</h4>
                         ${optionsHTML}
                     </div>
                 `;
