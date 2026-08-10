@@ -7,126 +7,480 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root { --bg-main: #f8f6f2; --card-bg: #ffffff; --primary: #8c6d53; --primary-dark: #6e523c; --text-dark: #2c2825; --text-muted: #7a736e; --accent-bg: #f3ece4; --radius-lg: 20px; --radius-md: 16px; --radius-sm: 12px; }
+        :root {
+            --bg-main: #f8f6f2;
+            --card-bg: #ffffff;
+            --primary: #8c6d53;
+            --primary-dark: #6e523c;
+            --text-dark: #2c2825;
+            --text-muted: #7a736e;
+            --accent-bg: #f3ece4;
+            --radius-lg: 20px;
+            --radius-md: 16px;
+            --radius-sm: 12px;
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
         body { background-color: var(--bg-main); color: var(--text-dark); padding: 15px; }
+
         .container { max-width: 1200px; margin: 0 auto; }
-        header { display: flex; flex-direction: column; gap: 15px; padding: 10px 0 20px 0; align-items: center; text-align: center; }
+
+        header {
+            display: flex; flex-direction: column; gap: 15px;
+            padding: 10px 0 20px 0; align-items: center; text-align: center;
+        }
         .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.1rem; cursor: pointer; }
         .logo i { font-size: 1.6rem; color: var(--primary); }
         .logo-text span { display: block; font-size: 0.75rem; font-weight: 400; color: var(--text-muted); }
+
         nav { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
         nav a { text-decoration: none; color: var(--text-dark); font-weight: 500; font-size: 0.85rem; padding: 6px 12px; border-radius: 8px; cursor: pointer; transition: all 0.2s; }
         nav a.active, nav a:hover { color: var(--primary); font-weight: 700; background: var(--accent-bg); }
+
+        .auth-btns { display: flex; gap: 10px; width: 100%; justify-content: center; margin-top: 5px; }
+        .btn { padding: 8px 18px; border-radius: 8px; border: none; font-weight: 600; cursor: pointer; font-size: 0.85rem; }
+        .btn-outline { background: white; border: 1px solid #e0d8cf; color: var(--text-dark); }
+        .btn-primary { background: var(--primary); color: white; }
+
         .page-section { display: none; }
         .page-section.active { display: block; }
-        .hero { background: linear-gradient(135deg, #f5efe9 0%, #ebe2d8 100%); border-radius: var(--radius-lg); padding: 25px 15px; margin-bottom: 20px; text-align: center; }
-        .btn { padding: 8px 18px; border-radius: 8px; border: none; font-weight: 600; cursor: pointer; font-size: 0.85rem; }
-        .btn-primary { background: var(--primary); color: white; }
+
+        .hero {
+            background: linear-gradient(135deg, #f5efe9 0%, #ebe2d8 100%);
+            border-radius: var(--radius-lg); padding: 25px 15px; display: flex; flex-direction: column; gap: 20px;
+            margin-bottom: 20px; text-align: center;
+        }
+        .badge {
+            background: rgba(255, 255, 255, 0.8); color: var(--primary-dark); padding: 5px 12px;
+            border-radius: 20px; font-size: 0.8rem; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 10px;
+        }
+        .hero h1 { font-size: 1.6rem; line-height: 1.3; margin-bottom: 10px; font-weight: 700; }
+        .hero p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px; }
+        
+        .hero-actions { display: flex; gap: 10px; justify-content: center; margin-bottom: 20px; }
+        
+        .teacher-section {
+            margin-top: 30px; padding: 30px; background: white; border-radius: 20px; 
+            border: 1px solid #f0e9e1; text-align: left;
+        }
+        .teacher-info h2 { color: var(--primary); margin-bottom: 15px; }
+        .teacher-info p { margin-bottom: 10px; line-height: 1.6; font-size: 0.95rem; }
+
+        .section-header-custom { margin-bottom: 20px; text-align: center; }
+        .filter-btns { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
+        .filter-btn { padding: 6px 14px; border-radius: 20px; border: 1px solid #e0d8cf; background: white; font-size: 0.8rem; cursor: pointer; }
+        .filter-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+
         .lessons-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
-        .lesson-card-item { background: var(--card-bg); border-radius: var(--radius-md); padding: 18px; border: 1px solid #f0e9e1; cursor: pointer; }
-        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); align-items: center; justify-content: center; padding: 15px; }
-        .modal-content { background: white; padding: 20px; border-radius: var(--radius-md); width: 100%; max-width: 700px; position: relative; }
-        .video-container { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; background: #000; }
-        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        .lesson-card-item {
+            background: var(--card-bg); border-radius: var(--radius-md); padding: 18px;
+            border: 1px solid #f0e9e1; display: flex; flex-direction: column; gap: 10px; cursor: pointer; transition: 0.2s;
+        }
+        .lesson-card-item:hover { border-color: var(--primary); }
+        .lesson-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; color: var(--text-muted); }
+        .lesson-tag { background: var(--accent-bg); color: var(--primary-dark); padding: 3px 8px; border-radius: 6px; font-weight: 600; }
+
+        .modal {
+            display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.6); align-items: center; justify-content: center; padding: 15px;
+        }
+        .modal-content {
+            background: white; padding: 20px; border-radius: var(--radius-md); width: 100%; max-width: 700px;
+            position: relative; box-shadow: 0 10px 25px rgba(0,0,0,0.2); text-align: center;
+        }
+        .close-modal {
+            position: absolute; right: 15px; top: 15px; font-size: 1.5rem; cursor: pointer; color: var(--text-muted); z-index: 10;
+        }
+        .video-container {
+            position: relative; width: 100%; padding-bottom: 56.25%; height: 0; margin-top: 15px; border-radius: 8px; overflow: hidden; background: #000;
+        }
+        .video-container iframe {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;
+        }
+
         .quiz-card { background: var(--card-bg); border-radius: var(--radius-md); padding: 20px; border: 1px solid #f0e9e1; margin-bottom: 15px; }
-        .quiz-option { background: #fdfbf7; padding: 12px; border-radius: var(--radius-sm); margin-top: 8px; cursor: pointer; display: flex; align-items: center; gap: 10px; }
+        .quiz-option { background: #fdfbf7; border: 1px solid #eae2d8; padding: 12px; border-radius: var(--radius-sm); margin-top: 8px; cursor: pointer; font-size: 0.85rem; display: flex; align-items: center; gap: 10px; }
+        .quiz-option input { accent-color: var(--primary); }
+        .reading-text { background: #fdfbf7; border: 1px solid #eae2d8; padding: 15px; border-radius: var(--radius-sm); margin-bottom: 15px; font-size: 0.9rem; line-height: 1.5; color: var(--text-dark); }
+        .result-box { background: var(--accent-bg); border-radius: var(--radius-md); padding: 25px; text-align: center; border: 1px solid #e2d3c3; margin-top: 20px; display: none; }
+        .feedback-item { background: white; padding: 12px; border-radius: 8px; margin-top: 10px; text-align: left; border-left: 4px solid #d9534f; font-size: 0.85rem; }
+
+        .trust-bar {
+            background: var(--card-bg); border-radius: var(--radius-md); padding: 20px;
+            display: grid; grid-template-columns: 1fr; gap: 15px; border: 1px solid #f0e9e1; text-align: center; margin-top: 30px;
+        }
+        .trust-item { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+        .trust-item i { font-size: 1.3rem; color: var(--primary); }
+        .trust-item h5 { font-size: 0.85rem; }
+        .trust-item p { font-size: 0.75rem; color: var(--text-muted); }
+
+        @media (min-width: 768px) {
+            body { padding: 20px 40px; }
+            header { flex-direction: row; justify-content: space-between; text-align: left; }
+            .auth-btns { width: auto; }
+            .hero { flex-direction: row; text-align: left; padding: 40px; align-items: center; }
+            .hero h1 { font-size: 2.2rem; }
+            .hero-actions { justify-content: flex-start; }
+            .lessons-grid { grid-template-columns: repeat(3, 1fr); }
+            .trust-bar { grid-template-columns: repeat(2, 1fr); text-align: left; }
+            .trust-item { flex-direction: row; }
+        }
     </style>
 </head>
 <body>
-    <div id="lockScreen" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #f8f6f2; z-index: 9999; display: flex; align-items: center; justify-content: center;">
-        <div style="background: white; padding: 30px; border-radius: 16px; width: 300px; text-align: center;">
-            <input type="text" id="accessCode" placeholder="Dəvət kodu..." style="width:100%; padding:12px; margin-bottom:15px; border: 1px solid #e0d8cf; border-radius: 8px;">
-            <button class="btn btn-primary" style="width:100%" onclick="checkCode()">Daxil ol</button>
+
+    <div id="lockScreen" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #f8f6f2; z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 20px;">
+        <div style="background: white; padding: 30px; border-radius: 16px; width: 100%; max-width: 400px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border: 1px solid #f0e9e1;">
+            <i class="fa-solid fa-lock" style="font-size: 2.5rem; color: var(--primary); margin-bottom: 15px;"></i>
+            <h3 style="margin-bottom: 10px;">Sistemə Giriş</h3>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px;">Dərsləri və testləri görmək üçün müəllimin təyin etdiyi kodu daxil edin:</p>
+            <input type="text" id="accessCode" placeholder="Dəvət kodu..." style="width:100%; padding:12px; margin-bottom:15px; border: 1px solid #e0d8cf; border-radius: 8px; outline: none; font-size: 1rem; text-align: center;">
+            <button class="btn btn-primary" style="width: 100%; padding: 12px; font-size: 1rem;" onclick="checkCode()">Daxil ol</button>
         </div>
     </div>
 
     <div class="container" id="mainContainer" style="display: none;">
         <header>
-            <div class="logo" onclick="showPage('home')"><i class="fa-solid fa-book-open"></i> NİGAR MÜƏLLİM</div>
+            <div class="logo" onclick="showPage('home')">
+                <i class="fa-solid fa-book-open"></i>
+                <div class="logo-text">
+                    NİGAR MÜƏLLİM
+                    <span>Azərbaycan dili və ədəbiyyatı</span>
+                </div>
+            </div>
             <nav>
                 <a id="nav-home" class="active" onclick="showPage('home')">Ana səhifə</a>
                 <a id="nav-lessons" onclick="showPage('lessons')">Dərslər</a>
-                <a id="nav-quiz" onclick="showPage('quiz')">Test</a>
+                <a id="nav-quiz" onclick="showPage('quiz')">Diaqnostik Test</a>
             </nav>
+            <div class="auth-btns">
+                <button class="btn btn-outline" onclick="logoutSystem()"><i class="fa-solid fa-right-from-bracket"></i> Çıxış</button>
+            </div>
         </header>
 
         <div id="home-page" class="page-section active">
-            <section class="hero"><h1>Azərbaycan dili dərsləri</h1></section>
+            <section class="hero">
+                <div>
+                    <div class="badge"><i class="fa-solid fa-seedling"></i> Xoş gəlmisiniz!</div>
+                    <h1>Azərbaycan dilini öyrənmək daha asan!</h1>
+                    <p>Video dərslər, izahlar, testlər və diaqnostik imtahanlar – hamısı bir platformada.</p>
+                    <div class="hero-actions">
+                        <button class="btn btn-primary" onclick="showPage('quiz')"><i class="fa-solid fa-clipboard-check"></i> Diaqnostik Testə Başla</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="teacher-section">
+                <div class="teacher-info">
+                    <h2>Haqqımda</h2>
+                    <p><strong>Ad, Soyad:</strong> Səttarlı Nigar Şahin qızı</p>
+                    <p><strong>Təhsil:</strong> ADU, Filologiya və jurnalistika fakültəsi (Azərbaycan dili və ədəbiyyatı müəllimi)</p>
+                    <p><strong>İşlədiyi məktəblər:</strong> 296, 218, 278 saylı məktəblər</p>
+                    <p><strong>Hazırlıq:</strong> Həm online, həm də əyani formatda. Dərslər həftədə 2 dəfə, 90 dəqiqə.</p>
+                    <p><strong>Üstünlüklərimiz:</strong> Sadə izah və yüksək nəticə!</p>
+                </div>
+            </section>
         </div>
 
         <div id="lessons-page" class="page-section">
+            <div class="section-header-custom">
+                <h2>Azərbaycan Dili Dərsləri</h2>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 5px;">Sinif seçərək mövzuları öyrənin və videoya baxın</p>
+            </div>
+
+            <div class="filter-btns">
+                <button class="filter-btn active" onclick="filterClass('all', this)">Bütün siniflər</button>
+                <button class="filter-btn" onclick="filterClass('5', this)">5-ci sinif</button>
+                <button class="filter-btn" onclick="filterClass('6', this)">6-cı sinif</button>
+                <button class="filter-btn" onclick="filterClass('7', this)">7-ci sinif</button>
+                <button class="filter-btn" onclick="filterClass('8', this)">8-ci sinif</button>
+                <button class="filter-btn" onclick="filterClass('9', this)">9-cu sinif</button>
+            </div>
+
             <div class="lessons-grid" id="lessons-list"></div>
         </div>
 
-        <div id="quiz-page" class="page-section">
-            <div id="quiz-questions"></div>
-            <button class="btn btn-primary" onclick="calculateResult()">Nəticəni yoxla</button>
-            <div id="result-box" style="display:none; margin-top:20px;"></div>
+        <div id="videoModal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal" onclick="closeVideoModal()">&times;</span>
+                <h3 id="modal-lesson-title" style="margin-bottom: 10px;">Dərs Videosu</h3>
+                <div class="video-container" id="video-frame-container"></div>
+            </div>
         </div>
+
+        <div id="quiz-page" class="page-section">
+            <div class="section-header-custom">
+                <h2>Diaqnostik Qiymətləndirmə</h2>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 5px;">Bilik səviyyənizi yoxlayın (16 sual)</p>
+            </div>
+            <form id="quiz-form">
+                <div id="quiz-questions"></div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <button type="button" class="btn btn-primary" onclick="calculateResult()" style="padding: 12px 30px; font-size: 1rem;">İmtahanı Bitir</button>
+                </div>
+            </form>
+            <div id="result-box" class="result-box">
+                <i class="fa-solid fa-trophy" style="font-size: 3rem; color: var(--primary); margin-bottom: 10px;"></i>
+                <h2 id="result-title">Nəticəniz</h2>
+                <p id="result-score" style="font-size: 1.2rem; font-weight: 700; margin: 10px 0;"></p>
+                <div id="feedback-container" style="margin-top: 15px;"></div>
+                <button class="btn btn-outline" style="margin-top: 20px;" onclick="showPage('quiz')">Yenidən Cəhd Et</button>
+            </div>
+        </div>
+
+        <footer class="trust-bar">
+            <div class="trust-item">
+                <i class="fa-solid fa-user-tie"></i>
+                <div>
+                    <h5>Təcrübəli müəllim</h5>
+                    <p>Peşəkar yanaşma</p>
+                </div>
+            </div>
+            <div class="trust-item">
+                <i class="fa-solid fa-comments"></i>
+                <div>
+                    <h5>Sual-cavab</h5>
+                    <p>Hər zaman dəstək</p>
+                </div>
+            </div>
+        </footer>
     </div>
 
-    <div id="videoModal" class="modal"><div class="modal-content"><span class="close-modal" onclick="closeVideoModal()" style="float:right; cursor:pointer;">&times;</span><div class="video-container" id="video-frame-container"></div></div></div>
-
     <script>
-        const lessonsData = [
-            { title: "Fonetika və Əlifba", class: "5", desc: "Səslər, hərflər, ahəng qanunu.", videoUrl: "" },
-            { title: "İsim və onun halları", class: "6", desc: "İsmin mənsubiyyət və hal şəkilçiləri.", videoUrl: "" },
-            { title: "Vasitəsiz nitq", class: "9", desc: "Müəllifin sözü və vasitəsiz nitq.", videoUrl: "https://www.youtube.com/embed/93wm0tmbpGQ" }
-        ];
-
-        const quizQuestions = [
-            { q: "1. “Pərakəndə” sözünün mənası:", options: ["Nizamsız", "Nizamlı", "Düzgün", "Yalan"], correct: 0 },
-            { q: "2. “Oxuyasınız” sözü hansı şəkildədir?", options: ["Əmr", "Arzu", "Xəbər", "Lazım"], correct: 1 }
-        ];
-
-        function checkCode() {
-            if(document.getElementById('accessCode').value === "NIGAR2024") {
-                localStorage.setItem("nigar_teacher_auth", "true");
+        window.onload = function() {
+            if(localStorage.getItem("nigar_teacher_auth") === "true") {
                 document.getElementById('lockScreen').style.display = 'none';
                 document.getElementById('mainContainer').style.display = 'block';
             }
+        };
+
+        function checkCode() {
+            const code = document.getElementById('accessCode').value;
+            if(code === "NIGAR2024") {
+                localStorage.setItem("nigar_teacher_auth", "true");
+                document.getElementById('lockScreen').style.display = 'none';
+                document.getElementById('mainContainer').style.display = 'block';
+            } else {
+                alert("Yanlış kod! Zəhmət olmasa yenidən yoxlayın.");
+            }
         }
 
-        window.onload = () => { if(localStorage.getItem("nigar_teacher_auth") === "true") { document.getElementById('lockScreen').style.display = 'none'; document.getElementById('mainContainer').style.display = 'block'; } };
+        function logoutSystem() {
+            localStorage.removeItem("nigar_teacher_auth");
+            location.reload();
+        }
+
+        const lessonsData = [
+            { title: "Fonetika və Əlifba", class: "5", topic: "Dilçilik", desc: "Səslər, hərflər, ahəng qanunu və heca izahı.", videoUrl: "" },
+            { title: "İsim və onun halları", class: "6", topic: "Morfologiya", desc: "İsmin mənsubiyyət və hal şəkilçiləri.", videoUrl: "" },
+            { title: "Təyin və Tamamlıq", class: "6", topic: "Sintaksis", desc: "Cümlənin ikinci dərəcəli üzvlərinin izahı.", videoUrl: "" },
+            { title: "Həmcins üzvlər", class: "7", topic: "Sintaksis", desc: "Həmcins üzvlərdə durğu işarələri və bağlayıcılar.", videoUrl: "" },
+            { title: "Mürəkkəb cümlə tipləri", class: "8", topic: "Sintaksis", desc: "Tabesiz və tabeli mürəkkəb cümlələr.", videoUrl: "" },
+            { title: "Vasitəsiz nitq", class: "9", topic: "Sintaksis", desc: "Müəllifin sözü və vasitəsiz nitqdə durğu işarələri.", videoUrl: "https://www.youtube.com/embed/93wm0tmbpGQ" }
+        ];
+
+        function openVideoModal(title, url) {
+            document.getElementById('modal-lesson-title').innerText = title;
+            const container = document.getElementById('video-frame-container');
+            if(!url) {
+                alert("Bu dərs üçün hələlik video əlavə olunmayıb.");
+                return;
+            }
+            container.innerHTML = `<iframe src="${url}" allow="autoplay" allowfullscreen></iframe>`;
+            document.getElementById('videoModal').style.display = 'flex';
+        }
+
+        function closeVideoModal() {
+            document.getElementById('videoModal').style.display = 'none';
+            document.getElementById('video-frame-container').innerHTML = '';
+        }
+
+        const quizQuestions = [
+            {
+                q: "1. “Pərakəndə” sözünün leksik mənasını müəyyən edin:",
+                options: ["fikirli, dərdli, qəmli", "nizamlı, intizamlı olan", "birlikdə, parçalara ayrılmama", "eyni yerdə daimi olan", "dağınıq, nizamsız, qarma-qarışıq"],
+                correct: 4
+            },
+            {
+                q: "2. “Ağıl olmasa, gözəllik də heç nəyə yaramaz.” cümləsində sözlərdən hansı isimdir?",
+                options: ["ağıl olmasa", "gözəllik", "yaramaz", "heç nəyə", "də"],
+                correct: 1
+            },
+            {
+                q: "3. Sözlərdən birinin tələffüzü səhv verilib:",
+                options: ["davranmaq – [davrammax]", "meymunlar – [meymunnar]", "danışıqlar – [danşıqlar]", "ümidsizlik – [ümitsizdik’]", "möhkəmlik – [möhkəmlik’]"],
+                correct: 2
+            },
+            {
+                q: "4. Dil haqqında hansı fikir doğrudur?",
+                options: ["Dil yeganə ünsiyyət vasitəsidir.", "Dil yalnız cəmiyyətdə formalaşa bilər.", "Dil şüurla əlaqəli deyil.", "Dil irsi xüsusiyyətlərlə bağlıdır.", "Dil ünsiyyət prosesidir."],
+                correct: 1
+            },
+            {
+                q: "5. “Kəndə yol çəkildi, gediş-gəliş artdı.” Tabesiz mürəkkəb cümlənin məna əlaqəsini göstərin:",
+                options: ["qarşılaşdırma", "ardıcıllıq", "aydınlaşdırma", "zaman", "səbəb-nəticə"],
+                correct: 4
+            },
+            {
+                q: "6. Hərfərdən biri nöqtələrin yerinə yazıla bilər: lo…man, mə…lub, ma…ara, təbli…at",
+                options: ["ğ", "x", "k", "q", "h"],
+                correct: 0
+            },
+            {
+                q: "7. Sözlərdən birinin yazılışı doğrudur:",
+                options: ["məhgəmə", "rəhmli", "məxbus", "məxnı", "taht"],
+                correct: 1
+            },
+            {
+                q: "8. “Oxuyasınız” sözü feilin hansı şəklindədir?",
+                options: ["əmr", "lazım", "vacib", "xəbər", "arzu"],
+                correct: 4
+            },
+            {
+                q: "9. İki leksik şəkilçisi olan feilləri göstərin:\n1. darandım\n2. yandırıldı\n3. yəhərləndi\n4. vidalaşdı\n5. böyütdü",
+                options: ["1,5", "2,3", "2,4", "3,4", "4,5"],
+                correct: 1
+            },
+            {
+                q: "10. İşarə əvəzliklərini göstərin:",
+                options: ["hərə, hamı, biri", "elə, belə, həmin", "biz, siz, onlar", "hər, bütün, filan", "hansı, harada"],
+                correct: 1
+            },
+            {
+                isReading: true,
+                text: "<strong>Mətn: “Qızılgül və kaktus”</strong><br><br>Biri var imiş, biri yox imiş. Uzaq bir səhrada gözəl görünüşü ilə qürur duyan bir gül var imiş.<br><br>Yeganə şikayəti isə tikanlı kaktusun yanında böyüməsi imiş. Hər gün qızılgül öz gözəl ləçəkləri ilə öyünüb, görünüşünə görə kaktusa lağ edib gülsə də, kaktus onun bu sözlərinə sakit qalırdı. Yaxınlıqdakı bütün bitkilər gülə bu hərəkətin düzgün olmadığını anlatmağa çalışsalar da, o kaktusa gülməyə davam edirdi.<br><br>Bir gün qızılgül: “Bir bu kaktusa baxın, hansı quş bunun üstünə qonsa tikanı batacaq və quşu yaralayacaq. Həm tikanlıdır, həm də zərərlidir.” – deyib yenə rişxənd etməyə başladı. Lakin kaktus yenə də cavab vermədi.<br><br>Bundan qısa müddət sonra qızmar bir yay gəldi, səhra həddindən artıq qurudu və bitkilər üçün su qalmadı. Qızılgül sürətlə solmağa başladı. Gözəl ləçəkləri qurumuş, təravətini itirmişdi. O, susuzluqdan öz ləçəklərini tökməyə başlamışdı.<br><br>Və birdən kaktusa dönərək bir sərçənin su içmək üçün dimdiklərini kaktusa batırdığını gördü. … Xeyirxah kaktus isə asanlıqla razılaşdı və dostluğunu əsirgəmədən hər ikisinə bu quraqlıqda kömək etdi.<br><br>Artıq qızılgül lağ etməyin pis bir xüsusiyyət olduğunu öyrəndi və bunu bir daha təkrar etmədi.",
+                q: "11. Mətndə tünd-qara hərflərlə verilmiş sözü hansı sözlə əvəz etmək olar? (“rişxənd etmək”)\n1. lağ etmək\n2. ələ salmaq\n3. rica etmək\n4. şikayət etmək",
+                options: ["3,4", "1,4", "2,3", "1,2", "2,4"],
+                correct: 3
+            },
+            {
+                q: "12. Mətnin nəticə hissəsinə aid olan fikri müəyyən edin:",
+                options: ["Kaktusun səbri", "Qızılgülün istehzası", "Bitkilərin dilə gəlməsi", "Qızılgülün peşmanlığı", "Qızılgülün şikayəti"],
+                correct: 3
+            },
+            {
+                q: "13. Uyğunluğu müəyyən edin:\n1. Qızılgül\n2. Kaktus\na. səxavətli\nb. özündənrazı\nc. dostcanlı\nd. lovğa",
+                options: ["1.b,d ; 2.a,c", "1.a,c ; 2.b,d", "1.c,b ; 2.a", "1.b ; 2.a", "1.a,b ; 2.c,d"],
+                correct: 0
+            },
+            {
+                q: "14. Nöqtələrin yerinə hansı cümlə yazılsa, tərkib hissələr arasındakı əlaqə pozular?",
+                options: ["Qızılgül öz etdiklərindən çox utansa da, kaktusdan su istədi.", "Qızılgül öz səhvini anladı və utanaraq kaktusdan su istədi.", "Qızılgül kaktusdan üzr istədi və ona kömək etməsini xahiş etdi.", "Qızılgül kaktusdan üzr istəmək əvəzinə su da tələb etdi.", "Qızılgül peşman oldu və kaktusdan kömək istədi."],
+                correct: 3
+            },
+            {
+                q: "15. Gülün “kaktus zərərlidir” fikri hansı abzasa əsasən yanlış olduğunu deyə bilərik?",
+                options: ["I", "III", "V", "IV", "II"],
+                correct: 2
+            },
+            {
+                q: "16. Qızılgül giley-güzar edirdi:",
+                options: ["səhrada bitməsindən", "susuzluqdan", "kaktusun tikanlı olmasından", "gözəl ləçəklərinin olmasından", "kaktusun yanında yetişməsindən"],
+                correct: 4
+            }
+        ];
 
         function showPage(pageName) {
             document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
-            if(pageName === 'lessons') {
+            document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+
+            if(pageName === 'home') {
+                document.getElementById('home-page').classList.add('active');
+                document.getElementById('nav-home').classList.add('active');
+            } else if(pageName === 'lessons') {
                 document.getElementById('lessons-page').classList.add('active');
-                const list = document.getElementById('lessons-list');
-                list.innerHTML = '';
-                lessonsData.forEach(l => list.innerHTML += `<div class="lesson-card-item" onclick="openVideoModal('${l.title}', '${l.videoUrl}')"><h3>${l.title}</h3><p>${l.desc}</p></div>`);
+                document.getElementById('nav-lessons').classList.add('active');
+                renderLessons('all');
             } else if(pageName === 'quiz') {
                 document.getElementById('quiz-page').classList.add('active');
+                document.getElementById('nav-quiz').classList.add('active');
                 renderQuiz();
-            } else { document.getElementById('home-page').classList.add('active'); }
+            }
+        }
+
+        function renderLessons(selectedClass) {
+            const list = document.getElementById('lessons-list');
+            list.innerHTML = '';
+            const filtered = selectedClass === 'all' ? lessonsData : lessonsData.filter(l => l.class === selectedClass);
+            filtered.forEach(lesson => {
+                list.innerHTML += `
+                    <div class="lesson-card-item" onclick="openVideoModal('${lesson.title}', '${lesson.videoUrl}')">
+                        <div class="lesson-meta">
+                            <span class="lesson-tag">${lesson.class}-ci sinif</span>
+                            <span><i class="fa-solid fa-play-circle" style="color: var(--primary);"></i> Videoya bax</span>
+                        </div>
+                        <h3 style="font-size: 1rem;">${lesson.title}</h3>
+                        <p style="font-size: 0.8rem; color: var(--text-muted);">${lesson.desc}</p>
+                    </div>
+                `;
+            });
+        }
+
+        function filterClass(cls, btn) {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderLessons(cls);
         }
 
         function renderQuiz() {
             const container = document.getElementById('quiz-questions');
+            document.getElementById('result-box').style.display = 'none';
+            document.getElementById('quiz-form').style.display = 'block';
             container.innerHTML = '';
+
             quizQuestions.forEach((item, index) => {
-                let opts = item.options.map((opt, i) => `<label class="quiz-option"><input type="radio" name="q${index}" value="${i}"> ${opt}</label>`).join('');
-                container.innerHTML += `<div class="quiz-card"><h4>${item.q}</h4>${opts}</div>`;
+                let optionsHTML = '';
+                item.options.forEach((opt, optIndex) => {
+                    optionsHTML += `
+                        <label class="quiz-option">
+                            <input type="radio" name="q${index}" value="${optIndex}">
+                            ${opt}
+                        </label>
+                    `;
+                });
+                let readingHTML = item.isReading ? `<div class="reading-text">${item.text}</div>` : '';
+                container.innerHTML += `
+                    <div class="quiz-card">
+                        ${readingHTML}
+                        <h4 style="margin-bottom: 10px; white-space: pre-line;">${item.q}</h4>
+                        ${optionsHTML}
+                    </div>
+                `;
             });
         }
 
-        function openVideoModal(title, url) {
-            if(!url) { alert("Video hələ əlavə olunmayıb."); return; }
-            document.getElementById('video-frame-container').innerHTML = `<iframe src="${url}" allowfullscreen></iframe>`;
-            document.getElementById('videoModal').style.display = 'flex';
-        }
-        
-        function closeVideoModal() { document.getElementById('videoModal').style.display = 'none'; document.getElementById('video-frame-container').innerHTML = ''; }
-        
         function calculateResult() {
             let score = 0;
+            let feedbackHTML = "<h4 style='margin-bottom:10px; color:var(--primary-dark);'>Səhv cavabların təhlili:</h4>";
+            let hasError = false;
+
             quizQuestions.forEach((item, index) => {
-                const sel = document.querySelector(`input[name="q${index}"]:checked`);
-                if(sel && parseInt(sel.value) === item.correct) score++;
+                const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                if(selected && parseInt(selected.value) === item.correct) {
+                    score++;
+                } else {
+                    hasError = true;
+                    let userAns = selected ? item.options[parseInt(selected.value)] : "Cavabsız";
+                    let correctAns = item.options[item.correct];
+                    feedbackHTML += `
+                        <div class="feedback-item">
+                            <strong>Sual ${index + 1}:</strong> ${item.q.split('\n')[0]}<br>
+                            <span style="color:#d9534f;">Sizin cavab: ${userAns}</span><br>
+                            <span style="color:#2ca02c;">Düzgün cavab: <strong>${correctAns}</strong></span>
+                        </div>
+                    `;
+                }
             });
-            alert("Nəticəniz: " + score);
+
+            if(!hasError) {
+                feedbackHTML = "<p style='color: #2ca02c; font-weight: 600; margin-top: 15px;'>Təbriklər! Bütün suallara düzgün cavab verdiniz!</p>";
+            }
+
+            document.getElementById('quiz-form').style.display = 'none';
+            const resultBox = document.getElementById('result-box');
+            resultBox.style.display = 'block';
+            document.getElementById('result-score').innerText = `16 sualdan ${score} düzgün cavab verdiniz!`;
+            document.getElementById('feedback-container').innerHTML = feedbackHTML;
         }
     </script>
 </body>
