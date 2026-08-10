@@ -62,10 +62,7 @@
         /* Teacher Profile Styles */
         .teacher-section {
             margin-top: 30px; padding: 30px; background: white; border-radius: 20px; 
-            border: 1px solid #f0e9e1; display: grid; grid-template-columns: 1fr; gap: 30px; align-items: center;
-        }
-        .teacher-img {
-            width: 100%; max-height: 450px; object-fit: cover; border-radius: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            border: 1px solid #f0e9e1; text-align: left;
         }
         .teacher-info h2 { color: var(--primary); margin-bottom: 15px; }
         .teacher-info p { margin-bottom: 10px; line-height: 1.6; font-size: 0.95rem; }
@@ -128,7 +125,6 @@
             .hero h1 { font-size: 2.2rem; }
             .hero-actions { justify-content: flex-start; }
             .lessons-grid { grid-template-columns: repeat(3, 1fr); }
-            .teacher-section { grid-template-columns: 1fr 2fr; }
             .trust-bar { grid-template-columns: repeat(2, 1fr); text-align: left; }
             .trust-item { flex-direction: row; }
         }
@@ -136,7 +132,18 @@
 </head>
 <body>
 
-    <div class="container">
+    <!-- Giriş Tələb Olunan Ekran (Kod daxil edilməyibsə görünür) -->
+    <div id="lockScreen" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #f8f6f2; z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 20px;">
+        <div style="background: white; padding: 30px; border-radius: 16px; width: 100%; max-width: 400px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border: 1px solid #f0e9e1;">
+            <i class="fa-solid fa-lock" style="font-size: 2.5rem; color: var(--primary); margin-bottom: 15px;"></i>
+            <h3 style="margin-bottom: 10px;">Sistemə Giriş</h3>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px;">Dərsləri və testləri görmək üçün müəllimin təyin etdiyi kodu daxil edin:</p>
+            <input type="text" id="accessCode" placeholder="Dəvət kodu..." style="width:100%; padding:12px; margin-bottom:15px; border: 1px solid #e0d8cf; border-radius: 8px; outline: none; font-size: 1rem; text-align: center;">
+            <button class="btn btn-primary" style="width: 100%; padding: 12px; font-size: 1rem;" onclick="checkCode()">Daxil ol</button>
+        </div>
+    </div>
+
+    <div class="container" id="mainContainer" style="display: none;">
         <header>
             <div class="logo" onclick="showPage('home')">
                 <i class="fa-solid fa-book-open"></i>
@@ -151,7 +158,7 @@
                 <a id="nav-quiz" onclick="showPage('quiz')">Diaqnostik Test</a>
             </nav>
             <div class="auth-btns">
-                <button class="btn btn-outline" onclick="openLoginModal()"><i class="fa-regular fa-user"></i> Giriş</button>
+                <button class="btn btn-outline" onclick="logoutSystem()"><i class="fa-solid fa-right-from-bracket"></i> Çıxış</button>
             </div>
         </header>
 
@@ -168,9 +175,8 @@
                 </div>
             </section>
 
-            <!-- Haqqımda Bölməsi -->
+            <!-- Haqqımda Bölməsi (Şəkilsiz) -->
             <section class="teacher-section">
-                <img src="teacher_profile.jpg" alt="Səttarlı Nigar" class="teacher-img">
                 <div class="teacher-info">
                     <h2>Haqqımda</h2>
                     <p><strong>Ad, Soyad:</strong> Səttarlı Nigar Şahin qızı</p>
@@ -201,23 +207,12 @@
             <div class="lessons-grid" id="lessons-list"></div>
         </div>
 
-        <!-- Drive Video Modal Window -->
+        <!-- Video Modal Pəncərəsi -->
         <div id="videoModal" class="modal">
             <div class="modal-content">
                 <span class="close-modal" onclick="closeVideoModal()">&times;</span>
                 <h3 id="modal-lesson-title" style="margin-bottom: 10px;">Dərs Videosu</h3>
                 <div class="video-container" id="video-frame-container"></div>
-            </div>
-        </div>
-
-        <!-- Giriş Modalı (Şagird kodu üçün) -->
-        <div id="loginModal" class="modal">
-            <div class="modal-content" style="max-width: 400px;">
-                <span class="close-modal" onclick="closeModal('loginModal')">&times;</span>
-                <h3 style="margin-bottom: 15px;">Şagird Girişi</h3>
-                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">Müəllimin təyin etdiyi kodu daxil edin:</p>
-                <input type="text" id="accessCode" placeholder="Dəvət kodu..." style="width:100%; padding:10px; margin-bottom:15px; border: 1px solid #e0d8cf; border-radius: 8px; outline: none;">
-                <button class="btn btn-primary" style="width: 100%; padding: 10px;" onclick="checkCode()">Daxil ol</button>
             </div>
         </div>
 
@@ -262,12 +257,38 @@
     </div>
 
     <script>
+        // Səhifə açıldıqda kod yoxlanılır
+        window.onload = function() {
+            if(localStorage.getItem("nigar_teacher_auth") === "true") {
+                document.getElementById('lockScreen').style.display = 'none';
+                document.getElementById('mainContainer').style.display = 'block';
+            }
+        };
+
+        function checkCode() {
+            const code = document.getElementById('accessCode').value;
+            // Buradakı şifrəni dəyişə bilərsiniz
+            if(code === "NIGAR2024") {
+                localStorage.setItem("nigar_teacher_auth", "true");
+                document.getElementById('lockScreen').style.display = 'none';
+                document.getElementById('mainContainer').style.display = 'block';
+            } else {
+                alert("Yanlış kod! Zəhmət olmasa yenidən yoxlayın.");
+            }
+        }
+
+        function logoutSystem() {
+            localStorage.removeItem("nigar_teacher_auth");
+            location.reload();
+        }
+
         const lessonsData = [
             { title: "Fonetika və Əlifba", class: "5", topic: "Dilçilik", desc: "Səslər, hərflər, ahəng qanunu və heca izahı.", videoUrl: "" },
             { title: "İsim və onun halları", class: "6", topic: "Morfologiya", desc: "İsmin mənsubiyyət və hal şəkilçiləri.", videoUrl: "" },
             { title: "Təyin və Tamamlıq", class: "6", topic: "Sintaksis", desc: "Cümlənin ikinci dərəcəli üzvlərinin izahı.", videoUrl: "" },
             { title: "Həmcins üzvlər", class: "7", topic: "Sintaksis", desc: "Həmcins üzvlərdə durğu işarələri və bağlayıcılar.", videoUrl: "" },
             { title: "Mürəkkəb cümlə tipləri", class: "8", topic: "Sintaksis", desc: "Tabesiz və tabeli mürəkkəb cümlələr.", videoUrl: "" },
+            // Google Drive doğru pleyer (preview) linki
             { title: "Vasitəsiz nitq", class: "9", topic: "Sintaksis", desc: "Müəllifin sözü və vasitəsiz nitqdə durğu işarələri.", videoUrl: "https://drive.google.com/file/d/1ZGKs3WhdDc6h0IaixpLvhNiybBayiQCI/preview" }
         ];
 
@@ -287,26 +308,6 @@
             document.getElementById('video-frame-container').innerHTML = '';
         }
 
-        function openLoginModal() {
-            document.getElementById('loginModal').style.display = 'flex';
-        }
-
-        function closeModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
-        }
-
-        function checkCode() {
-            const code = document.getElementById('accessCode').value;
-            // Buradakı şifrəni istədiyiniz kimi dəyişə bilərsiniz
-            if(code === "NIGAR2024") {
-                alert("Uğurla daxil olundu!");
-                closeModal('loginModal');
-                document.getElementById('accessCode').value = '';
-            } else {
-                alert("Yanlış kod! Zəhmət olmasa yenidən yoxlayın.");
-            }
-        }
-
         const quizQuestions = [
             {
                 q: "1. “Pərakəndə” sözünün leksik mənasını müəyyən edin:",
@@ -320,7 +321,7 @@
             },
             {
                 q: "3. Sözlərdən birinin tələffüzü səhv verilib:",
-                options: ["davranmaq – [davrammax]", "meymunlar – [meymunnar]", "danışıqlar – [danşıqlar]", "ümidsizlik – [ümitsizdik’]", "möhkəmlik – [möhkəmlik’]"],
+                options: ["daranmaq – [davrammax]", "meymunlar – [meymunnar]", "danışıqlar – [danşıqlar]", "ümidsizlik – [ümitsizdik’]", "möhkəmlik – [möhkəmlik’]"],
                 correct: 0
             },
             {
