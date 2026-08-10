@@ -58,11 +58,17 @@
         .hero p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px; }
         
         .hero-actions { display: flex; gap: 10px; justify-content: center; margin-bottom: 20px; }
-        .hero-image {
-            background: #fff; border-radius: 14px; padding: 15px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05); border: 1px solid #f0e6dc; width: 100%;
+        
+        /* Teacher Profile Styles */
+        .teacher-section {
+            margin-top: 30px; padding: 30px; background: white; border-radius: 20px; 
+            border: 1px solid #f0e9e1; display: grid; grid-template-columns: 1fr; gap: 30px; align-items: center;
         }
-        .laptop-mockup { background: #fdfbf7; border-radius: 10px; padding: 25px 10px; border: 1px solid #eae2d8; }
+        .teacher-img {
+            width: 100%; max-height: 450px; object-fit: cover; border-radius: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .teacher-info h2 { color: var(--primary); margin-bottom: 15px; }
+        .teacher-info p { margin-bottom: 10px; line-height: 1.6; font-size: 0.95rem; }
 
         .section-header-custom { margin-bottom: 20px; text-align: center; }
         .filter-btns { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
@@ -103,6 +109,7 @@
         .quiz-option input { accent-color: var(--primary); }
         .reading-text { background: #fdfbf7; border: 1px solid #eae2d8; padding: 15px; border-radius: var(--radius-sm); margin-bottom: 15px; font-size: 0.9rem; line-height: 1.5; color: var(--text-dark); }
         .result-box { background: var(--accent-bg); border-radius: var(--radius-md); padding: 25px; text-align: center; border: 1px solid #e2d3c3; margin-top: 20px; display: none; }
+        .feedback-item { background: white; padding: 12px; border-radius: 8px; margin-top: 10px; text-align: left; border-left: 4px solid #d9534f; font-size: 0.85rem; }
 
         .trust-bar {
             background: var(--card-bg); border-radius: var(--radius-md); padding: 20px;
@@ -120,9 +127,9 @@
             .hero { flex-direction: row; text-align: left; padding: 40px; align-items: center; }
             .hero h1 { font-size: 2.2rem; }
             .hero-actions { justify-content: flex-start; }
-            .hero-image { width: 45%; }
             .lessons-grid { grid-template-columns: repeat(3, 1fr); }
-            .trust-bar { grid-template-columns: repeat(4, 1fr); text-align: left; }
+            .teacher-section { grid-template-columns: 1fr 2fr; }
+            .trust-bar { grid-template-columns: repeat(2, 1fr); text-align: left; }
             .trust-item { flex-direction: row; }
         }
     </style>
@@ -144,8 +151,7 @@
                 <a id="nav-quiz" onclick="showPage('quiz')">Diaqnostik Test</a>
             </nav>
             <div class="auth-btns">
-                <button class="btn btn-outline"><i class="fa-regular fa-user"></i> Giriş</button>
-                <button class="btn btn-primary">Qeydiyyat</button>
+                <button class="btn btn-outline" onclick="openLoginModal()"><i class="fa-regular fa-user"></i> Giriş</button>
             </div>
         </header>
 
@@ -160,12 +166,18 @@
                         <button class="btn btn-primary" onclick="showPage('quiz')"><i class="fa-solid fa-clipboard-check"></i> Diaqnostik Testə Başla</button>
                     </div>
                 </div>
-                <div class="hero-image">
-                    <div class="laptop-mockup">
-                        <i class="fa-solid fa-graduation-cap" style="font-size: 2.5rem; color: var(--primary); margin-bottom: 10px;"></i>
-                        <h2>NİGAR MÜƏLLİM</h2>
-                        <p style="font-size: 0.8rem; color: var(--text-muted);">Təhsil Platforması</p>
-                    </div>
+            </section>
+
+            <!-- Haqqımda Bölməsi -->
+            <section class="teacher-section">
+                <img src="teacher_profile.jpg" alt="Səttarlı Nigar" class="teacher-img">
+                <div class="teacher-info">
+                    <h2>Haqqımda</h2>
+                    <p><strong>Ad, Soyad:</strong> Səttarlı Nigar Şahin qızı</p>
+                    <p><strong>Təhsil:</strong> ADU, Filologiya və jurnalistika fakültəsi (Azərbaycan dili və ədəbiyyatı müəllimi)</p>
+                    <p><strong>İşlədiyi məktəblər:</strong> 296, 218, 278 saylı məktəblər</p>
+                    <p><strong>Hazırlıq:</strong> Həm online, həm də əyani formatda. Dərslər həftədə 2 dəfə, 90 dəqiqə.</p>
+                    <p><strong>Üstünlüklərimiz:</strong> Sadə izah və yüksək nəticə!</p>
                 </div>
             </section>
         </div>
@@ -189,14 +201,23 @@
             <div class="lessons-grid" id="lessons-list"></div>
         </div>
 
-        <!-- Video Modal Window -->
+        <!-- Drive Video Modal Window -->
         <div id="videoModal" class="modal">
             <div class="modal-content">
                 <span class="close-modal" onclick="closeVideoModal()">&times;</span>
                 <h3 id="modal-lesson-title" style="margin-bottom: 10px;">Dərs Videosu</h3>
-                <div class="video-container" id="video-frame-container">
-                    <!-- YouTube video buraya yüklənəcək -->
-                </div>
+                <div class="video-container" id="video-frame-container"></div>
+            </div>
+        </div>
+
+        <!-- Giriş Modalı (Şagird kodu üçün) -->
+        <div id="loginModal" class="modal">
+            <div class="modal-content" style="max-width: 400px;">
+                <span class="close-modal" onclick="closeModal('loginModal')">&times;</span>
+                <h3 style="margin-bottom: 15px;">Şagird Girişi</h3>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">Müəllimin təyin etdiyi kodu daxil edin:</p>
+                <input type="text" id="accessCode" placeholder="Dəvət kodu..." style="width:100%; padding:10px; margin-bottom:15px; border: 1px solid #e0d8cf; border-radius: 8px; outline: none;">
+                <button class="btn btn-primary" style="width: 100%; padding: 10px;" onclick="checkCode()">Daxil ol</button>
             </div>
         </div>
 
@@ -216,7 +237,8 @@
                 <i class="fa-solid fa-trophy" style="font-size: 3rem; color: var(--primary); margin-bottom: 10px;"></i>
                 <h2 id="result-title">Nəticəniz</h2>
                 <p id="result-score" style="font-size: 1.2rem; font-weight: 700; margin: 10px 0;"></p>
-                <button class="btn btn-outline" onclick="showPage('quiz')">Yenidən Cəhd Et</button>
+                <div id="feedback-container" style="margin-top: 15px;"></div>
+                <button class="btn btn-outline" style="margin-top: 20px;" onclick="showPage('quiz')">Yenidən Cəhd Et</button>
             </div>
         </div>
 
@@ -226,7 +248,7 @@
                 <i class="fa-solid fa-user-tie"></i>
                 <div>
                     <h5>Təcrübəli müəllim</h5>
-                    <p>10+ illik təcrübə</p>
+                    <p>Peşəkar yanaşma</p>
                 </div>
             </div>
             <div class="trust-item">
@@ -246,25 +268,43 @@
             { title: "Təyin və Tamamlıq", class: "6", topic: "Sintaksis", desc: "Cümlənin ikinci dərəcəli üzvlərinin izahı.", videoUrl: "" },
             { title: "Həmcins üzvlər", class: "7", topic: "Sintaksis", desc: "Həmcins üzvlərdə durğu işarələri və bağlayıcılar.", videoUrl: "" },
             { title: "Mürəkkəb cümlə tipləri", class: "8", topic: "Sintaksis", desc: "Tabesiz və tabeli mürəkkəb cümlələr.", videoUrl: "" },
-            { title: "Vasitəsiz nitq", class: "9", topic: "Sintaksis", desc: "Müəllifin sözü və vasitəsiz nitqdə durğu işarələri.", videoUrl: "https://www.youtube.com/embed/93wm0tmbpGQ" }
+            { title: "Vasitəsiz nitq", class: "9", topic: "Sintaksis", desc: "Müəllifin sözü və vasitəsiz nitqdə durğu işarələri.", videoUrl: "https://drive.google.com/file/d/1ZGKs3WhdDc6h0IaixpLvhNiybBayiQCI/preview" }
         ];
 
         function openVideoModal(title, url) {
             document.getElementById('modal-lesson-title').innerText = title;
             const container = document.getElementById('video-frame-container');
-            
             if(!url) {
                 alert("Bu dərs üçün hələlik video əlavə olunmayıb.");
                 return;
             }
-
-            container.innerHTML = `<iframe src="${url}" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+            container.innerHTML = `<iframe src="${url}" allow="autoplay" allowfullscreen></iframe>`;
             document.getElementById('videoModal').style.display = 'flex';
         }
 
         function closeVideoModal() {
             document.getElementById('videoModal').style.display = 'none';
             document.getElementById('video-frame-container').innerHTML = '';
+        }
+
+        function openLoginModal() {
+            document.getElementById('loginModal').style.display = 'flex';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        function checkCode() {
+            const code = document.getElementById('accessCode').value;
+            // Buradakı şifrəni istədiyiniz kimi dəyişə bilərsiniz
+            if(code === "NIGAR2024") {
+                alert("Uğurla daxil olundu!");
+                closeModal('loginModal');
+                document.getElementById('accessCode').value = '';
+            } else {
+                alert("Yanlış kod! Zəhmət olmasa yenidən yoxlayın.");
+            }
         }
 
         const quizQuestions = [
@@ -280,7 +320,7 @@
             },
             {
                 q: "3. Sözlərdən birinin tələffüzü səhv verilib:",
-                options: ["daranmaq – [davrammax]", "meymunlar – [meymunnar]", "danışıqlar – [danşıqlar]", "ümidsizlik – [ümitsizdik’]", "möhkəmlik – [möhkəmlik’]"],
+                options: ["davranmaq – [davrammax]", "meymunlar – [meymunnar]", "danışıqlar – [danşıqlar]", "ümidsizlik – [ümitsizdik’]", "möhkəmlik – [möhkəmlik’]"],
                 correct: 0
             },
             {
@@ -294,7 +334,7 @@
                 correct: 4
             },
             {
-                q: "6. Hərfərdən biri nöqtələrin yerinə yazıla bilər: lo…man, mə…lub, ma…ara, təbii…ət",
+                q: "6. Hərfərdən biri nöqtələrin yerinə yazıla bilər: lo…man, mə…lub, ma…ara, təbli…at",
                 options: ["ğ", "x", "k", "q", "h"],
                 correct: 4
             },
@@ -423,16 +463,36 @@
 
         function calculateResult() {
             let score = 0;
+            let feedbackHTML = "<h4 style='margin-bottom:10px; color:var(--primary-dark);'>Səhv cavabların təhlili:</h4>";
+            let hasError = false;
+
             quizQuestions.forEach((item, index) => {
                 const selected = document.querySelector(`input[name="q${index}"]:checked`);
                 if(selected && parseInt(selected.value) === item.correct) {
                     score++;
+                } else {
+                    hasError = true;
+                    let userAns = selected ? item.options[parseInt(selected.value)] : "Cavabsız";
+                    let correctAns = item.options[item.correct];
+                    feedbackHTML += `
+                        <div class="feedback-item">
+                            <strong>Sual ${index + 1}:</strong> ${item.q.split('\n')[0]}<br>
+                            <span style="color:#d9534f;">Sizin cavab: ${userAns}</span><br>
+                            <span style="color:#2ca02c;">Düzgün cavab: <strong>${correctAns}</strong></span>
+                        </div>
+                    `;
                 }
             });
+
+            if(!hasError) {
+                feedbackHTML = "<p style='color: #2ca02c; font-weight: 600; margin-top: 15px;'>Təbriklər! Bütün suallara düzgün cavab verdiniz!</p>";
+            }
+
             document.getElementById('quiz-form').style.display = 'none';
             const resultBox = document.getElementById('result-box');
             resultBox.style.display = 'block';
             document.getElementById('result-score').innerText = `16 sualdan ${score} düzgün cavab verdiniz!`;
+            document.getElementById('feedback-container').innerHTML = feedbackHTML;
         }
     </script>
 </body>
