@@ -60,11 +60,12 @@
         .hero-actions { display: flex; gap: 10px; justify-content: center; margin-bottom: 20px; }
         
         .teacher-section {
-            margin-top: 30px; padding: 30px; background: white; border-radius: 20px; 
+            margin-top: 20px; padding: 30px; background: white; border-radius: 20px; 
             border: 1px solid #f0e9e1; text-align: left;
         }
-        .teacher-info h2 { color: var(--primary); margin-bottom: 15px; }
-        .teacher-info p { margin-bottom: 10px; line-height: 1.6; font-size: 0.95rem; }
+        .teacher-section h2 { color: var(--primary); margin-bottom: 20px; font-size: 1.4rem; }
+        .teacher-section p, .teacher-section li { margin-bottom: 12px; line-height: 1.6; font-size: 0.95rem; }
+        .teacher-section ul { padding-left: 20px; margin-top: 10px; margin-bottom: 15px; }
 
         .section-header-custom { margin-bottom: 20px; text-align: center; }
         .filter-btns { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
@@ -150,6 +151,7 @@
             </div>
             <nav>
                 <a id="nav-home" class="active" onclick="showPage('home')">Ana səhifə</a>
+                <a id="nav-about" onclick="showPage('about')">Haqqımda</a>
                 <a id="nav-lessons" onclick="showPage('lessons')">Dərslər</a>
                 <a id="nav-quiz" onclick="showPage('quiz')">Diaqnostik Test</a>
             </nav>
@@ -169,16 +171,35 @@
                     </div>
                 </div>
             </section>
+        </div>
 
+        <div id="about-page" class="page-section">
             <section class="teacher-section">
-                <div class="teacher-info">
-                    <h2>Haqqımda</h2>
-                    <p><strong>Ad, Soyad:</strong> Səttarlı Nigar Şahin qızı</p>
-                    <p><strong>Təhsil:</strong> ADU, Filologiya və jurnalistika fakültəsi (Azərbaycan dili və ədəbiyyatı müəllimi)</p>
-                    <p><strong>İşlədiyi məktəblər:</strong> 296, 218, 278 saylı məktəblər</p>
-                    <p><strong>Hazırlıq:</strong> Həm online, həm də əyani formatda. Dərslər həftədə 2 dəfə, 90 dəqiqə.</p>
-                    <p><strong>Üstünlüklərimiz:</strong> Sadə izah və yüksək nəticə!</p>
-                </div>
+                <h2>Haqqımda</h2>
+                <p>📚 <strong>Azərbaycan dili və ədəbiyyat fənni üzrə hazırlıq dərslərinə qeydiyyat başladı!</strong></p>
+                <p>👩🏻‍🏫 <strong>Müəllim:</strong> Nigar Səttarlı</p>
+                <p>🎓 <strong>ADU – Filologiya (Azərbaycan dili və ədəbiyyat)</strong></p>
+                
+                <p style="margin-top: 15px;">🏫 <strong>İş təcrübəsi:</strong></p>
+                <ul>
+                    <li>296 nömrəli məktəb</li>
+                    <li>218 nömrəli məktəb</li>
+                    <li>278 nömrəli məktəb</li>
+                </ul>
+
+                <p style="margin-top: 15px;">✨ <strong>Dərslərimizdə:</strong></p>
+                <ul>
+                    <li>Həftədə <strong>2 dəfə – 90 dəqiqə</strong></li>
+                    <li><strong>Onlayn və əyani</strong> dərslər</li>
+                    <li>Mövzuların <strong>asan və aydın izahı</strong></li>
+                    <li>Fərdi yanaşma və <strong>müxtəlif öyrətmə metodları</strong></li>
+                    <li>Mövzu üzrə tapşırıqlar və praktiki çalışmalar</li>
+                    <li>Hər ay <strong>sınaq imtahanları</strong></li>
+                    <li>Şagirdin nəticəsinin mütəmadi izlənməsi</li>
+                    <li><strong>Qəbul imtahanına sistemli hazırlıq və zəmanətli nəticəyə yönəlmiş proqram</strong></li>
+                </ul>
+
+                <p style="margin-top: 15px; font-style: italic;">📌 Məqsədimiz sadəcə mövzunu öyrətmək deyil, şagirdin <strong>düşünmə, tətbiq etmə və imtahan strategiyası bacarıqlarını</strong> inkişaf etdirməkdir.</p>
             </section>
         </div>
 
@@ -387,6 +408,9 @@
             if(pageName === 'home') {
                 document.getElementById('home-page').classList.add('active');
                 document.getElementById('nav-home').classList.add('active');
+            } else if(pageName === 'about') {
+                document.getElementById('about-page').classList.add('active');
+                document.getElementById('nav-about').classList.add('active');
             } else if(pageName === 'lessons') {
                 document.getElementById('lessons-page').classList.add('active');
                 document.getElementById('nav-lessons').classList.add('active');
