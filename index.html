@@ -189,13 +189,13 @@
             <div class="lessons-grid" id="lessons-list"></div>
         </div>
 
-        <!-- Drive Video Modal Window -->
+        <!-- Video Modal Window -->
         <div id="videoModal" class="modal">
             <div class="modal-content">
                 <span class="close-modal" onclick="closeVideoModal()">&times;</span>
                 <h3 id="modal-lesson-title" style="margin-bottom: 10px;">Dərs Videosu</h3>
                 <div class="video-container" id="video-frame-container">
-                    <!-- Google Drive video buraya yüklənəcək -->
+                    <!-- YouTube video buraya yüklənəcək -->
                 </div>
             </div>
         </div>
@@ -247,7 +247,7 @@
             { title: "Həmcins üzvlər", class: "7", topic: "Sintaksis", desc: "Həmcins üzvlərdə durğu işarələri və bağlayıcılar.", videoUrl: "" },
             { title: "Mürəkkəb cümlə tipləri", class: "8", topic: "Sintaksis", desc: "Tabesiz və tabeli mürəkkəb cümlələr.", videoUrl: "" },
             { title: "Vasitəsiz nitq", class: "9", topic: "Sintaksis", desc: "Müəllifin sözü və vasitəsiz nitqdə durğu işarələri.", videoUrl: "https://www.youtube.com/embed/93wm0tmbpGQ" }
-
+        ];
 
         function openVideoModal(title, url) {
             document.getElementById('modal-lesson-title').innerText = title;
@@ -258,7 +258,7 @@
                 return;
             }
 
-            container.innerHTML = `<iframe src="${url}" allow="autoplay" allowfullscreen></iframe>`;
+            container.innerHTML = `<iframe src="${url}" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
             document.getElementById('videoModal').style.display = 'flex';
         }
 
