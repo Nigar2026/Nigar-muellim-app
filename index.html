@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NİGAR MÜƏLLİM – Azərbaycan dili və ədəbiyyatı</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
             --bg-main: #f8f6f2;
@@ -17,329 +15,216 @@
             --accent-bg: #f3ece4;
             --radius-lg: 20px;
         }
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             background-color: var(--bg-main);
             color: var(--text-dark);
-            display: flex;
-            justify-content: center;
-            padding: 20px 10px;
+            margin: 0;
+            padding: 16px;
         }
         .container {
-            width: 100%;
-            max-width: 700px;
+            max-width: 600px;
+            margin: 0 auto;
         }
-        header {
-            text-align: center;
-            margin-bottom: 25px;
+        .header {
             background: var(--card-bg);
             padding: 20px;
             border-radius: var(--radius-lg);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            margin-bottom: 16px;
         }
-        header h1 {
+        .logo-title {
+            font-size: 20px;
+            font-weight: bold;
             color: var(--primary-dark);
-            font-size: 1.5rem;
-            margin-bottom: 5px;
+            margin: 8px 0 4px 0;
         }
-        header p {
+        .logo-sub {
+            font-size: 12px;
             color: var(--text-muted);
-            font-size: 0.9rem;
+            margin-bottom: 14px;
         }
-        nav {
+        .nav-menu {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--text-dark);
+            padding-bottom: 4px;
+        }
+        .nav-menu a.active, .nav-menu a:hover {
+            color: var(--primary);
+            border-bottom: 2px solid var(--primary);
+        }
+        .auth-buttons {
             display: flex;
             gap: 10px;
-            margin-bottom: 20px;
+            justify-content: center;
+            margin-top: 12px;
         }
-        nav button {
-            flex: 1;
-            padding: 12px;
-            border: none;
-            background: var(--card-bg);
-            color: var(--text-dark);
-            border-radius: 12px;
+        .btn {
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 13px;
             font-weight: 600;
             cursor: pointer;
-            transition: 0.3s;
+            border: 1px solid var(--primary);
         }
-        nav button.active {
+        .btn-outline {
+            background: transparent;
+            color: var(--primary-dark);
+        }
+        .btn-solid {
             background: var(--primary);
             color: white;
         }
-        .page {
-            display: none;
-        }
-        .page.active {
-            display: block;
-        }
-        .card {
+        .hero-card {
             background: var(--card-bg);
+            padding: 24px 20px;
             border-radius: var(--radius-lg);
-            padding: 20px;
-            margin-bottom: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-        }
-        .passage-box {
-            background: var(--accent-bg);
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-        .passage-box h3 {
-            margin-bottom: 10px;
-            color: var(--primary-dark);
-        }
-        .question-title {
-            font-weight: 600;
-            margin-bottom: 12px;
-            font-size: 1rem;
-        }
-        .option-label {
-            display: flex;
-            align-items: center;
-            padding: 10px 14px;
-            margin-bottom: 8px;
-            background: var(--bg-main);
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: 0.2s;
-        }
-        .option-label:hover {
-            background: var(--accent-bg);
-        }
-        .option-label input {
-            margin-right: 10px;
-        }
-        footer {
-            margin-top: 30px;
             text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            margin-bottom: 16px;
         }
-        .trust-bar {
+        .badge {
+            background: var(--accent-bg);
+            color: var(--primary-dark);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+        .hero-card h2 {
+            font-size: 22px;
+            color: var(--text-dark);
+            margin: 0 0 10px 0;
+        }
+        .hero-card p {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin: 0 0 20px 0;
+            line-height: 1.4;
+        }
+        .action-btns {
             display: flex;
-            justify-content: space-around;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+        .btn-main {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 13px;
+        }
+        .btn-sec {
             background: var(--card-bg);
-            padding: 15px;
-            border-radius: var(--radius-lg);
-            font-size: 0.85rem;
+            color: var(--text-dark);
+            border: 1px solid #ddd;
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 13px;
         }
-        .trust-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
+        .stats {
+            font-size: 12px;
             color: var(--text-muted);
         }
-        .trust-item i {
-            color: var(--primary);
-            font-size: 1.2rem;
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--primary-dark);
+            margin: 20px 0 10px 0;
+        }
+        .section-card {
+            background: var(--card-bg);
+            padding: 16px 20px;
+            border-radius: var(--radius-lg);
+            margin-bottom: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .section-card h4 {
+            margin: 0 0 6px 0;
+            font-size: 16px;
+            color: var(--text-dark);
+        }
+        .section-card p {
+            margin: 0;
+            font-size: 13px;
+            color: var(--text-muted);
         }
     </style>
 </head>
 <body>
-
-<div class="container">
-    <header>
-        <h1>NİGAR MÜƏLLİM</h1>
-        <p>Azərbaycan dili və ədəbiyyatı haqqında hər şey</p>
-    </header>
-
-    <nav>
-        <button id="nav-home" class="active" onclick="showPage('home')">Mövzular</button>
-        <button id="nav-quiz" onclick="showPage('quiz')">Sınaq İmtahanı</button>
-    </nav>
-
-    <!-- MÖVZULAR SƏHİFƏSİ -->
-    <div id="home-page" class="page active">
-        <div id="lessons-container"></div>
-    </div>
-
-    <!-- SİNAQ SƏHİFƏSİ -->
-    <div id="quiz-page" class="page">
-        <div class="card">
-            <h2>Diaqnostik Qiymətləndirmə</h2>
-            <p style="color: var(--text-muted); margin-bottom: 15px;">Bilik səviyyənizi yoxlayın (16 sual)</p>
+    <div class="container">
+        <!-- Yuxarı Menyu və Başlıq -->
+        <div class="header">
+            <div style="font-size: 24px;">📖</div>
+            <div class="logo-title">NİGAR MÜƏLLİM</div>
+            <div class="logo-sub">Azərbaycan dili və ədəbiyyatı</div>
             
-            <div class="passage-box">
-                <h3>Mətn: “Qızılgül və kaktus”</h3>
-                <p>Biri var imiş, biri yox imiş. Uzaq bir səhrada gözəl görünüşü ilə qürur duyan bir gül var imiş.</p><br>
-                <p>Yeganə şikayəti isə tikanlı kaktusun yanında böyüməsi imiş. Hər gün qızılgül öz gözəl ləçəkləri ilə öyünüb, görünüşünə görə kaktusa lağ edib gülsə də, kaktus onun bu sözlərinə sakit qalırdı. Yaxınlıqdakı bütün bitkilər gülə bu hərəkətin düzgün olmadığını anlatmağa çalışsalar da, o kaktusa gülməyə davam edirdi.</p><br>
-                <p>Bir gün qızılgül: “Bir bu kaktusa baxın, hansı quş bunun üstünə qonsa tikanı batacaq və quşu yaralayacaq. Həm tikanlıdır, həm də zərərlidir.” – deyib yenə <strong>rişxənd etməyə</strong> başladı. Lakin kaktus yenə də cavab vermədi.</p><br>
-                <p>Bundan qısa müddət sonra qızmar bir yay gəldi, səhra həddindən artıq qurudu və bitkilər üçün su qalmadı. Qızılgül sürətlə solmağa başladı. Gözəl ləçəkləri qurumuş, təravətini itirmişdi. O, susuzluqdan öz ləçəklərini tökməyə başlamışdı.</p><br>
-                <p>Və birdən kaktusa dönərək bir sərçənin su içmək üçün dimdiklərini kaktusa batırdığını gördü. … Xeyirxah kaktus isə asanlıqla razılaşdı və dostluğunu əsirgəmədən hər ikisinə bu quraqlıqda kömək etdi.</p><br>
-                <p>Artıq qızılgül lağ etməyin pis bir xüsusiyyət olduğunu öyrəndi və bunu bir daha təkrar etmədi.</p>
+            <div class="nav-menu">
+                <a href="#" class="active">Ana səhifə</a>
+                <a href="#">Dərslər</a>
+                <a href="#">Videolar</a>
+                <a href="#">Testlər</a>
+                <a href="#">Materiallar</a>
+            </div>
+
+            <div class="auth-buttons">
+                <button class="btn btn-outline">Giriş</button>
+                <button class="btn btn-solid">Qeydiyyat</button>
             </div>
         </div>
 
-        <div id="quiz-container"></div>
+        <!-- Əsas Xoş gəlmisiniz hissəsi -->
+        <div class="hero-card">
+            <div class="badge">🌱 Xoş gəlmisiniz!</div>
+            <h2>Azərbaycan dilini öyrənmək daha asan!</h2>
+            <p>Video dərslər, izahlar, testlər və tapşırıqlar – hamısı bir platformada. 5+ il peşəkar təcrübə.</p>
+            
+            <div class="action-btns">
+                <button class="btn-main">▶ Dərslərə başla</button>
+                <button class="btn-sec">Haqqında</button>
+            </div>
+            
+            <div class="stats">⭐ Keyfiyyətli dərslər &nbsp;•&nbsp; 📚 Asan izah</div>
+        </div>
+
+        <!-- Bütün Bölmələr Aktiv Şəkildə -->
+        <div class="section-title">Aktiv Bölmələr</div>
+
+        <div class="section-card">
+            <h4>📋 Diaqnostik Qiymətləndirmə (16 Sual)</h4>
+            <p>Bilgilərinizi yoxlamaq üçün 16 suallıq test tapşırıqları və cavabları.</p>
+        </div>
+
+        <div class="section-card">
+            <h4>📚 Mövzular və Dərslər</h4>
+            <p>Fonetika, leksika, morfologiya və sintaksis üzrə ətraflı dərslər.</p>
+        </div>
+
+        <div class="section-card">
+            <h4>🎬 Video İzahlar</h4>
+            <p>Qaydaların asan üsullarla video izahlı dərsləri.</p>
+        </div>
+
+        <div class="section-card">
+            <h4>📝 Sınaq İmtahanları</h4>
+            <p>imtahan səviyyəsində sınaqlar və interaktiv testlər.</p>
+        </div>
     </div>
-
-    <footer>
-        <div class="trust-bar">
-            <div class="trust-item">
-                <i class="fa-solid fa-user-tie"></i>
-                <div>
-                    <h5>Təcrübəli müəllim</h5>
-                    <p>10+ illik təcrübə</p>
-                </div>
-            </div>
-            <div class="trust-item">
-                <i class="fa-solid fa-comments"></i>
-                <div>
-                    <h5>Sual-cavab</h5>
-                    <p>Hər zaman dəstək</p>
-                </div>
-            </div>
-        </div>
-    </footer>
-</div>
-
-<script>
-    const lessonsData = [
-        { title: "Fonetika və əlifba", desc: "Sait və samit hərflər, ahəng qanunu" },
-        { title: "İsim və onun halları", desc: "İsmin mənsubiyyət və hal şəkilçiləri" },
-        { title: "Təyin və Tamamlıq", desc: "Cümlənin ikinci dərəcəli üzvləri" },
-        { title: "Həmcins üzvlər", desc: "Cümlədə həmcins üzvlər və durğu işarələri" },
-        { title: "Mürəkkəb cümlə tipləri", desc: "Tabeli və tabesiz mürəkkəb cümlələr" },
-        { title: "Vasitəsiz nitq", desc: "Dialoqlar və vasitəsiz nitqin yazılışı" }
-    ];
-
-    const quizQuestions = [
-      {
-        q: "1. “Pərakəndə” sözünün leksik mənasını müəyyən edin:",
-        options: ["fikirli, dərdli, qəmli", "nizamlı, intizamlı olan", "birlikdə, parçalara ayrılmama", "eyni yerdə daimi olan", "dağınıq, nizamsız, qarma-qarışıq"],
-        answer: 4
-      },
-      {
-        q: "2. “Ağıl olmasa, gözəllik də heç nəyə yaramaz.” cümləsində sözlərdən hansı isimdir?",
-        options: ["ağıl olmasa", "gözəllik", "yaramaz", "heç nəyə", "də"],
-        answer: 1
-      },
-      {
-        q: "3. Sözlərdən birinin tələffüzü səhv verilib:",
-        options: ["daranmaq – [davrammax]", "meymunlar – [meymunnar]", "danışıqlar – [danşıqlar]", "ümidsizlik – [ümitsizdik’]", "möhkəmlik – [möhkəmlik’]"],
-        answer: 0
-      },
-      {
-        q: "4. Dil haqqında hansı fikir doğrudur?",
-        options: ["Dil yeganə ünsiyyət vasitəsidir.", "Dil yalnız cəmiyyətdə formalaşa bilər.", "Dil şüurla əlaqəli deyil.", "Dil irsi xüsusiyyətlərlə bağlıdır.", "Dil ünsiyyət prosesidir."],
-        answer: 1
-      },
-      {
-        q: "5. “Kəndə yol çəkildi, gediş-gəliş artdı.” Tabesiz mürəkkəb cümlənin məna əlaqəsini göstərin:",
-        options: ["qarşılaşdırma", "ardıcıllıq", "aydınlaşdırma", "zaman", "səbəb-nəticə"],
-        answer: 4
-      },
-      {
-        q: "6. Hərflərdən biri nöqtələrin yerinə yazıla bilər: lo…man, mə…lub, ma…ara, təbii…ət",
-        options: ["ğ", "x", "k", "q", "h"],
-        answer: 4
-      },
-      {
-        q: "7. Sözlərdən birinin yazılışı doğrudur:",
-        options: ["məhgəmə", "rəhmli", "məxbus", "məxnı", "taht"],
-        answer: 1
-      },
-      {
-        q: "8. “Oxuyasınız” sözü feilin hansı şəklindədir?",
-        options: ["əmr", "lazım", "vacib", "xəbər", "arzu"],
-        answer: 4
-      },
-      {
-        q: "9. İki leksik şəkilçisi olan feilləri göstərin: 1.darandım 2.yandırıldı 3.yəhərləndi 4.vidalaşdı 5.böyütdü",
-        options: ["1, 5", "2, 3", "2, 4", "3, 4", "4, 5"],
-        answer: 1
-      },
-      {
-        q: "10. İşarə əvəzliklərini göstərin:",
-        options: ["hərə, hamı, biri", "elə, belə, həmin", "biz, siz, onlar", "hər, bütün, filan", "hansı, harada"],
-        answer: 1
-      },
-      {
-        q: "11. Mətndə tünd-qara hərflərlə verilmiş sözü hansı sözlə əvəz etmək olar? (“rişxənd etmək”)",
-        options: ["3, 4", "1, 4", "2, 3", "1, 2", "2, 4"],
-        answer: 3
-      },
-      {
-        q: "12. Mətnin nəticə hissəsinə aid olan fikri müəyyən edin:",
-        options: ["Kaktusun səbri", "Qızılgülün istehzası", "Bitkilərin dilə gəlməsi", "Qızılgülün peşmanlığı", "Qızılgülün şikayəti"],
-        answer: 3
-      },
-      {
-        q: "13. Uyğunluğu müəyyən edin: 1. Qızılgül (a. səxavətli, b. özündənrazı, c. dostcanlı, d. lovğa) 2. Kaktus",
-        options: ["1.b,d ; 2.a,c", "1.a,c ; 2.b,d", "1.c,b ; 2.a", "1.b ; 2.a", "1.a,b ; 2.c,d"],
-        answer: 0
-      },
-      {
-        q: "14. Nöqtələrin yerinə hansı cümlə yazılsa, tərkib hissələr arasındakı əlaqə pozular?",
-        options: [
-          "Qızılgül öz etdiklərindən çox utansa da, kaktusdan su istədi.",
-          "Qızılgül öz səhvini anladı və utanaraq kaktusdan su istədi.",
-          "Qızılgül kaktusdan üzr istədi və ona kömək etməsini xahiş etdi.",
-          "Qızılgül kaktusdan üzr istəmək əvəzinə su da tələb etdi.",
-          "Qızılgül peşman oldu və kaktusdan kömək istədi."
-        ],
-        answer: 3
-      },
-      {
-        q: "15. Gülün “kaktus zərərlidir” fikri hansı abzasa əsasən yanlış olduğunu deyə bilərik?",
-        options: ["I", "III", "V", "IV", "II"],
-        answer: 2
-      },
-      {
-        q: "16. Qızılgül giley-güzar edirdi:",
-        options: ["səhrada bitməsindən", "susuzluqdan", "kaktusun tikanlı olmasından", "gözəl ləçəklərinin olmasından", "kaktusun yanında yetişməsindən"],
-        answer: 4
-      }
-    ];
-
-    function showPage(pageName) {
-        document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
-        document.querySelectorAll('nav button').forEach(el => el.classList.remove('active'));
-        
-        if(pageName === 'home') {
-            document.getElementById('home-page').classList.add('active');
-            document.getElementById('nav-home').classList.add('active');
-        } else {
-            document.getElementById('quiz-page').classList.add('active');
-            document.getElementById('nav-quiz').classList.add('active');
-        }
-    }
-
-    function renderLessons() {
-        const container = document.getElementById('lessons-container');
-        container.innerHTML = lessonsData.map(item => `
-            <div class="card">
-                <h3>${item.title}</h3>
-                <p style="color: var(--text-muted); font-size: 0.9rem;">${item.desc}</p>
-            </div>
-        `).join('');
-    }
-
-    function renderQuiz() {
-        const container = document.getElementById('quiz-container');
-        container.innerHTML = quizQuestions.map((item, index) => `
-            <div class="card">
-                <div class="question-title">${item.q}</div>
-                ${item.options.map((opt, optIndex) => `
-                    <label class="option-label">
-                        <input type="radio" name="question-${index}" value="${optIndex}">
-                        ${opt}
-                    </label>
-                `).join('')}
-            </div>
-        `).join('');
-    }
-
-    renderLessons();
-    renderQuiz();
-</script>
-
 </body>
 </html>
